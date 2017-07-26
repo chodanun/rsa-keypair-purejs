@@ -15,7 +15,12 @@ import * as en from 'jsrsasign';
 export class MyApp {
   rootPage:any = HomePage;
   KEYUTIL: any;
-  
+  prvPem: any;
+  prvKeyObj: any;
+  enMsg: any;
+
+  KJUR: any;
+
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -31,17 +36,23 @@ export class MyApp {
     this.KEYUTIL = en.KEYUTIL;
     obj = this.KEYUTIL.generateKeypair('RSA','1024');
     console.log(obj)
-    let keyObjPub = this.KEYUTIL.getKey({n: obj.pubKeyObj.n , e: obj.pubKeyObj.e });
-    // let keyObjPrv = this.KEYUTIL.getKey({n: obj.prvKeyObj.n, e: obj.prvKeyObj.e, d: obj.prvKeyObj.d, p: obj.prvKeyObj.p, q: obj.prvKeyObj.q, dmp1: obj.prvKeyObj.dmp1, dmq1: obj.prvKeyObj.dmq1, co: obj.prvKeyObj.co});
-    console.log(keyObjPub)
-    // console.log(keyObjPrv)
     let pubPem = this.KEYUTIL.getPEM(obj.pubKeyObj) 
     let prvPem = this.KEYUTIL.getPEM(obj.prvKeyObj,"PKCS1PRV") 
     console.log(pubPem)
     console.log(prvPem)
 
-    // let obj2 = this.KEYUTIL.getJWKFromKey(obj.pubKeyObj);
-    // console.log(obj2);
+    this.prvPem = prvPem ;
+    this.prvKeyObj = obj.prvKeyObj;
+
+    
+    
+  }
+
+  decrypt(){
+    let x = en.KJUR.crypto.Cipher.decrypt(this.enMsg,this.prvKeyObj,'RSA');
+    // let x = this.KJUR.decrypt
+    console.log(x);
+
   }
 }
 

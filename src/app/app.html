@@ -1,1 +1,6 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<!-- <ion-nav [root]="rootPage"></ion-nav> -->
+<ion-item>
+    <ion-label floating>enMsg</ion-label>
+    <ion-input type="text"[(ngModel)]="enMsg"></ion-input>
+</ion-item>
+<button ion-button full (click)="decrypt()">Decrypt</button>
