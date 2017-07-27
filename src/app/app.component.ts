@@ -49,8 +49,8 @@ export class MyApp {
   }
 
   decrypt(){
+    // enMsg -> hex
     let x = en.KJUR.crypto.Cipher.decrypt(this.enMsg,this.prvKeyObj,'RSA');
-    // let x = this.KJUR.decrypt
     console.log(x);
 
   }
