@@ -8,6 +8,8 @@ import { HomePage } from '../pages/home/home';
 // RSA
 import * as en from 'jsrsasign';
 
+// AES
+import AES from 'crypto-js/aes';
 
 @Component({
   templateUrl: 'app.html'
@@ -27,11 +29,18 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-      this.init();
+      // this.initRSA();
+      this.initAES();
+
     });
   }
+  
+  initAES(){
+    let en = AES.encrypt("my message","123").toString();
+    console.log(en);
+  }
 
-  init(){
+  initRSA(){
     let obj;
     this.KEYUTIL = en.KEYUTIL;
     obj = this.KEYUTIL.generateKeypair('RSA','1024');
@@ -40,15 +49,12 @@ export class MyApp {
     let prvPem = this.KEYUTIL.getPEM(obj.prvKeyObj,"PKCS1PRV") 
     console.log(pubPem)
     console.log(prvPem)
-
     this.prvPem = prvPem ;
     this.prvKeyObj = obj.prvKeyObj;
 
-    
-    
   }
 
-  decrypt(){
+  decryptRSA(){
     // enMsg -> hex
     let x = en.KJUR.crypto.Cipher.decrypt(this.enMsg,this.prvKeyObj,'RSA');
     console.log(x);
